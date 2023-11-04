@@ -70,7 +70,21 @@ const app = {
         })
         $('.playlist').innerHTML = htmls.join('')
     },
+    handleEvents: function(){
+        // handle zoom in/out CD when page scroll
+        const cdSize = $('.cd').offsetWidth
+        document.onscroll = function() {
+            const scrollTop = window.scrollY || document.documentElement.scrollTop
+            const newCdSize = cdSize - scrollTop
+            $('.cd').style.width = newCdSize > 0 ? newCdSize + 'px' : 0
+            $('.cd').style.opacity = newCdSize / cdSize
+        }
+    },
     start: function(){
+        // listen / handle DOM events
+        this.handleEvents()
+
+        // render playlist
         this.render()
     }
 }
