@@ -2,7 +2,7 @@ const $ = document.querySelector.bind(document)
 const $$ = document.querySelectorAll.bind(document)
 
 const app = {
-    currentIndex: 0,
+    currentIndex: 4,
     songs: [
         {
             name: 'Written In The Stars',
@@ -87,13 +87,27 @@ const app = {
             $('.cd').style.width = newCdSize > 0 ? newCdSize + 'px' : 0
             $('.cd').style.opacity = newCdSize / cdSize
         }
+
+        // handle play button click
+        $('.btn-toggle-play').onclick = function() {
+            $('.player').classList.add('playing')   // change from |> to ||
+            $('#audio').play()
+        }
+    },
+    loadCurrentSong: function() {
+        $('header h2').textContent = this.currentSong.name
+        $('.cd-thumb').style.backgroundImage = `url('${this.currentSong.image}')`
+        $('#audio').src = this.currentSong.path
     },
     start: function(){
         // define object's properties
         this.defineProperties()
-        
+
         // listen / handle DOM events
         this.handleEvents()
+
+        // load the first song when start the app
+        this.loadCurrentSong()
 
         // render playlist
         this.render()
