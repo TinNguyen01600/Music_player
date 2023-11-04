@@ -2,6 +2,7 @@ const $ = document.querySelector.bind(document)
 const $$ = document.querySelectorAll.bind(document)
 
 const app = {
+    currentIndex: 0,
     songs: [
         {
             name: 'Written In The Stars',
@@ -70,6 +71,13 @@ const app = {
         })
         $('.playlist').innerHTML = htmls.join('')
     },
+    defineProperties: function() {
+        Object.defineProperty(this, 'currentSong', {
+            get: function() {
+                return this.songs[this.currentIndex]
+            }
+        })
+    },
     handleEvents: function(){
         // handle zoom in/out CD when page scroll
         const cdSize = $('.cd').offsetWidth
@@ -81,6 +89,9 @@ const app = {
         }
     },
     start: function(){
+        // define object's properties
+        this.defineProperties()
+        
         // listen / handle DOM events
         this.handleEvents()
 
